@@ -6,8 +6,10 @@ class Anthill
 {
 public:
 	Anthill();
+	void steal();
 	void grow(int branches,int food);
 	void decrease();
+	void starve();//:)))))
 private:
 	vector<Ant> anthill;
 	int size;

@@ -1,0 +1,10 @@
+﻿  anthill.cpp
+  Enemy.cpp
+  Создание кода...
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Nurse::work(void)" (?work@Nurse@@UEAAXXZ).
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Soldier::work(void)" (?work@Soldier@@UEAAXXZ).
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Shepherd::work(void)" (?work@Shepherd@@UEAAXXZ).
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Collector::work(void)" (?work@Collector@@UEAAXXZ).
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Builder::work(void)" (?work@Builder@@UEAAXXZ).
+ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Cleaner::work(void)" (?work@Cleaner@@UEAAXXZ).
+C:\Users\artem\source\repos\Anthill\Anthill\x64\Debug\Life_of_ants.exe : fatal error LNK1120: неразрешенных внешних элементов: 6

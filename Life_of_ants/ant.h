@@ -7,6 +7,7 @@ class Ant
 public:
 	Ant();
 	void grow();
+	int health_decrease(int damage);
 private:
 	int ages;
 	int health;

@@ -14,6 +14,12 @@ void Ant::grow()
     role_update();
 }
 
+int Ant::health_decrease(int damage)
+{
+    health -= damage;
+    return health;
+}
+
 void Ant::role_update()
 {
     if (ages < NURSE_AGE) return;
@@ -39,9 +45,17 @@ void Ant::role_update()
     }
     if (ages >= COLLECTOR_AGE && ages < CLEANER_AGE)
     {
-        Collector collector;
-        role = &collector;
-        return;
+        std::srand(std::time(0));
+        int random_choice = std::rand() % 2;
+        if (random_choice == 0) 
+        {
+            Collector collector;
+            role = &collector;
+            return;
+        }
+        Builder builder;
+        role = &builder;
+        return;     
     }
     Cleaner cleaner;
     role = &cleaner;

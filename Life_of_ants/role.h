@@ -28,6 +28,12 @@ public:
 	void work() override;
 
 };
+class Builder :public Role
+{
+public:
+	void work() override;
+
+};
 class Cleaner :public Role
 {
 public:
