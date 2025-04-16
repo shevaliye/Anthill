@@ -1,17 +1,18 @@
 #include "ant.h"
-#include <random>
-Ant::Ant()
+Ant::Ant(int ind)
 {
+    status = true;
+    damage = 15;
     ages = 0;
     std::srand(std::time(0));
     int random_choice = std::rand() % 2;
     health = (random_choice == 0) ? 50 : 100;
+    role = nullptr;
 }
 
 void Ant::grow()
 {
-    ages++;
-    role_update();
+    ages+=1;//сука помен€й
 }
 
 int Ant::health_decrease(int damage)
@@ -20,43 +21,93 @@ int Ant::health_decrease(int damage)
     return health;
 }
 
-void Ant::role_update()
+void Ant::set_status(bool stat)
 {
-    if (ages < NURSE_AGE) return;
+    status = stat;
+}
+
+chetirka* Ant::role_update()
+{
+    if (ages < NURSE_AGE)
+    {
+        chetirka* func = new chetirka(-1, -1);
+        return func;
+    }
+       
     if (ages >= NURSE_AGE && ages < SOLDIER_AGE)
     {
-        Nurse nurse;
-        role = &nurse;
-        return;
-    }
-    if (ages >= SOLDIER_AGE && ages <COLLECTOR_AGE)
-    {
-        if (health <= 50)
+        if (role == nullptr)
         {
-            Shepherd shepherd;
-            role = &shepherd;
+            chetirka* func = new chetirka(-1, 0);
+            role = new Nurse;
+            return func;
         }
         else
         {
-            Soldier soldier;
-            role = &soldier;
+            chetirka* func = new chetirka(-1, -1);
+            return func;
         }
-        return;
+
+    }
+    if (ages >= SOLDIER_AGE && ages < COLLECTOR_AGE)
+    {
+        if (role->get_number() == 1 || role->get_number() == 2)
+        {
+            chetirka* func = new chetirka(-1, -1);
+            return func;
+        }
+        else
+        {
+            if (health <= 50)
+            {
+                chetirka* func = new chetirka(role->get_number(), 2);
+                delete role;
+                role = new Shepherd;
+                return func;
+            }
+            else
+            {
+                chetirka* func = new chetirka(role->get_number(), 1);
+                delete role;
+                role = new Soldier;
+                damage = 30;
+                return func;
+            }
+        }
     }
     if (ages >= COLLECTOR_AGE && ages < CLEANER_AGE)
     {
-        std::srand(std::time(0));
-        int random_choice = std::rand() % 2;
-        if (random_choice == 0) 
+        if (role->get_number() == 3 || role->get_number() == 4)
         {
-            Collector collector;
-            role = &collector;
-            return;
+            chetirka* func = new chetirka(-1, -1);
+            return func;
         }
-        Builder builder;
-        role = &builder;
-        return;     
+        else
+        {
+            std::srand(std::time(0));
+            int random_choice = std::rand() % 2;
+            if (random_choice == 0)
+            {
+                chetirka* func = new chetirka(role->get_number(), 3);
+                delete role;
+                role = new Collector;
+                return func;
+            }
+            chetirka* func = new chetirka(role->get_number(), 4);
+            delete role;
+            role = new Builder;
+            return func;
+        }
+
     }
-    Cleaner cleaner;
-    role = &cleaner;
+    if (role->get_number() == 5)
+    {
+        chetirka* func = new chetirka(-1, -1);
+        return func;
+    }
+    chetirka* func = new chetirka(role->get_number(), 5);
+    delete role;
+    role = new Cleaner;
+    return func;
 }
+

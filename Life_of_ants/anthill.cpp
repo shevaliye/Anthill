@@ -1,15 +1,22 @@
 #include "anthill.h"
-
+#include <random>
 Anthill::Anthill()
 {
-	size = 2;
-	Ant ant1;
-	Ant ant2;
+	for (int i = 0; i < 6; i++)
+	{
+		Informer inf;
+		informers.push_back(inf);
+	}
+	branches = 0;
+	food = 0;
+	size = 0;
+	Ant *ant1 = new Ant(size++);
+	Ant *ant2 = new Ant(size++);
 	anthill.push_back(ant1);
 	anthill.push_back(ant2);
 	max_count = 100;
-	max_food = 100;
-	food_count = 2;
+	max_food = 1000;
+	food_count = 1000;
 }
 
 void Anthill::steal()
@@ -20,7 +27,7 @@ void Anthill::steal()
 	}
 }
 
-void Anthill::grow(int branches,int food)
+void Anthill::grow()
 {
 	max_count += branches;
 	max_food += branches/2;
@@ -32,6 +39,20 @@ void Anthill::grow(int branches,int food)
 	{
 		food_count += food;
 	}
+	branches = 0;
+	food = 0;
+}
+void Anthill::grow_ant()
+{
+	for (int i = 0; i < size; i++)
+	{
+		anthill[i]->grow();
+		redistribution(i);
+		if (anthill[i]->get_ages() > 20)//сука помен€й
+		{
+			death_ant(i);
+		}
+	}
 }
 void Anthill::decrease()
 {
@@ -39,18 +60,178 @@ void Anthill::decrease()
 	while (size > max_count)
 	{
 		auto iter = anthill.cbegin();
+		delete anthill[0];
 		anthill.erase(iter);
 		size--;
+	}
+}
+void Anthill::death_ant(int ind)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		informers[i].death_ant(ind);
+	}
+	auto iter = anthill.cbegin();
+	delete anthill[ind];
+	anthill.erase(iter + ind);
+	size--;
+
+}
+void Anthill::redistribution(int i)
+{
+	chetirka* chet = anthill[i]->role_update();
+	if (chet->get_from() == -1)
+	{
+		if (chet->get_to() == -1)
+		{
+			return;
+		}
+		else
+		{
+			informers[chet->get_to()].subscribe(i);
+		}
+	}
+	else
+	{
+		if (chet->get_from() != chet->get_to())
+		{
+			informers[chet->get_from()].unsubscribe(i);
+			informers[chet->get_to()].subscribe(i);
+		}
+		else
+		{
+			return;
+		}
+
+	}
+}
+void Anthill::workers(int work, int ind_inf)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (anthill[i]->get_role() != nullptr)
+		{
+			if (anthill[i]->get_role()->get_number() == ind_inf && anthill[i]->get_status())
+			{
+				work--;
+				anthill[i]->set_status(false);
+			}
+			if (work == 0)
+			{
+				break;
+			}
+		}
+	}
+}
+void Anthill::now_stay_active()
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (!anthill[i]->get_status())
+		{
+			anthill[i]->set_status(true);
+			if (anthill[i]->get_role()->get_number() == 4)
+			{
+				branches++;
+			}
+			if (anthill[i]->get_role()->get_number() == 3)
+			{
+				food++;
+			}
+		}
+	}
+}
+void Anthill::attacked(int id,int damage)
+{
+	if (anthill[id]->health_decrease(damage)<= 0)
+	{
+		death_ant(id);
+	}
+}
+void Anthill::addant()
+{
+	if (size < max_count && food_count>0)
+	{
+		Ant* ant = new Ant(size++);
+		anthill.push_back(ant);
+	}
+}
+void Anthill::eat()
+{
+	if (food_count == 0)
+	{
+		starve();
+	}
+	else if(food_count<size)
+	{
+		food_count = 0;
+	}
+	else
+	{
+		food_count -= size;
+	}
+}
+void Anthill::notify(int inf)
+{
+	for (int i = 0; i < informers[inf].get_size(); i++)
+	{
+		if (anthill[informers[inf].get_subscribers()[i]]->get_status())
+		{
+			anthill[informers[inf].get_subscribers()[i]]->set_status(false);
+		}
 	}
 }
 void Anthill::starve()
 {
 	for (int i = 0; i < size ; i++)
 	{
-		if (anthill[i].health_decrease(1) == 0)
+		if (anthill[i]->health_decrease(10) <= 0)//сука помен€й
 		{
-			auto iter = anthill.cbegin();
-			anthill.erase(iter + i);
+			death_ant(i);
 		}
 	}
 }
+
+void Anthill::add_food(int berry)
+{
+	food += berry;
+}
+
+void Anthill::add_branch(int branch)
+{
+	branches += branch;
+}
+
+int Anthill::get_count_informers(int inf)
+{
+	return informers[inf].get_size();
+}
+
+void Anthill::get_roles()
+{
+	vector<int> jobs(6,0);
+	for (int i = 0; i < size; i++)
+	{
+		if (anthill[i]->get_role() != nullptr)
+		{
+			for (int x = 0; x < 6; x++)
+			{
+				if (anthill[i]->get_role()->get_number() == x)
+				{
+					jobs[x]++;
+					break;
+				}
+			}
+		}
+
+	}
+	cout << "Nurses: " << jobs[0] << endl;
+	cout << "Soldiers: " << jobs[1] << endl;
+	cout << "Shepherds: " << jobs[2] << endl;
+	cout << "Collectors: " << jobs[3] << endl;
+	cout << "Builders: " << jobs[4] << endl;
+	cout << "Cleaners: " << jobs[5] << endl;
+}
+
+
+

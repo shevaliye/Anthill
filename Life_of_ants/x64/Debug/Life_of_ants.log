@@ -1,10 +1,11 @@
 ﻿  anthill.cpp
-  Enemy.cpp
+C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+  (компиляция исходного файла "anthill.cpp")
+  
+  main.cpp
+C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+  (компиляция исходного файла "main.cpp")
+  
+C:\Users\Egor2\source\repos\Anthill\Life_of_ants\main.cpp(23,33): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   Создание кода...
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Nurse::work(void)" (?work@Nurse@@UEAAXXZ).
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Soldier::work(void)" (?work@Soldier@@UEAAXXZ).
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Shepherd::work(void)" (?work@Shepherd@@UEAAXXZ).
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Collector::work(void)" (?work@Collector@@UEAAXXZ).
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Builder::work(void)" (?work@Builder@@UEAAXXZ).
-ant.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl Cleaner::work(void)" (?work@Cleaner@@UEAAXXZ).
-C:\Users\artem\source\repos\Anthill\Anthill\x64\Debug\Life_of_ants.exe : fatal error LNK1120: неразрешенных внешних элементов: 6
+  Life_of_ants.vcxproj -> C:\Users\Egor2\source\repos\Anthill\x64\Debug\Life_of_ants.exe

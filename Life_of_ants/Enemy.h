@@ -1,11 +1,12 @@
 #pragma once
-#include "ant.h"
 #include "anthill.h"
+#include <iostream>
 class Enemy
 {
+public:
 	Enemy();
-	void attack(Ant & ant);
-	void steal(Anthill& anthill);
+	void attack(Anthill& anthill);
+	void steal(Anthill &anthill);
 	//~Enemy();
 private:
 	int health;
