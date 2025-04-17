@@ -23,6 +23,7 @@ public:
 	int health_decrease(int damage);
 	void set_status(bool stat);
 	bool get_status() {return status;};
+	int get_damage() { return damage; };
 	chetirka* role_update();
 	Role* get_role() { return role; };
 private:

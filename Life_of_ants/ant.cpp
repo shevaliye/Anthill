@@ -4,7 +4,6 @@ Ant::Ant(int ind)
     status = true;
     damage = 15;
     ages = 0;
-    std::srand(std::time(0));
     int random_choice = std::rand() % 2;
     health = (random_choice == 0) ? 50 : 100;
     role = nullptr;
@@ -12,7 +11,7 @@ Ant::Ant(int ind)
 
 void Ant::grow()
 {
-    ages+=1;//сука помен€й
+    ages++;
 }
 
 int Ant::health_decrease(int damage)
@@ -84,9 +83,8 @@ chetirka* Ant::role_update()
         }
         else
         {
-            std::srand(std::time(0));
-            int random_choice = std::rand() % 2;
-            if (random_choice == 0)
+            int random_choice = std::rand() % 100;
+            if (random_choice < 50)
             {
                 chetirka* func = new chetirka(role->get_number(), 3);
                 delete role;

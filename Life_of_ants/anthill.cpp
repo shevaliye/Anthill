@@ -23,7 +23,7 @@ void Anthill::steal()
 {
 	if (food_count > 0) 
 	{
-		food_count -= 1;
+		food_count-=5;
 	}
 }
 
@@ -48,7 +48,7 @@ void Anthill::grow_ant()
 	{
 		anthill[i]->grow();
 		redistribution(i);
-		if (anthill[i]->get_ages() > 20)//сука помен€й
+		if (anthill[i]->get_ages() > 20)
 		{
 			death_ant(i);
 		}
@@ -56,7 +56,7 @@ void Anthill::grow_ant()
 }
 void Anthill::decrease()
 {
-	max_count -= 10;
+	max_count -= 20;
 	while (size > max_count)
 	{
 		auto iter = anthill.cbegin();
@@ -162,13 +162,13 @@ void Anthill::eat()
 	{
 		starve();
 	}
-	else if(food_count<size)
+	else if(food_count<size/4)
 	{
 		food_count = 0;
 	}
 	else
 	{
-		food_count -= size;
+		food_count -= size/4;
 	}
 }
 void Anthill::notify(int inf)
@@ -185,7 +185,7 @@ void Anthill::starve()
 {
 	for (int i = 0; i < size ; i++)
 	{
-		if (anthill[i]->health_decrease(10) <= 0)//сука помен€й
+		if (anthill[i]->health_decrease(5) <= 0)
 		{
 			death_ant(i);
 		}
@@ -207,6 +207,15 @@ int Anthill::get_count_informers(int inf)
 	return informers[inf].get_size();
 }
 
+int Anthill::get_role_id(int id)
+{
+	if (anthill[id]->get_role() != nullptr)
+	{
+		return anthill[id]->get_role()->get_number();
+	}
+	return -1;
+}
+
 void Anthill::get_roles()
 {
 	vector<int> jobs(6,0);
@@ -214,16 +223,8 @@ void Anthill::get_roles()
 	{
 		if (anthill[i]->get_role() != nullptr)
 		{
-			for (int x = 0; x < 6; x++)
-			{
-				if (anthill[i]->get_role()->get_number() == x)
-				{
-					jobs[x]++;
-					break;
-				}
-			}
+			jobs[anthill[i]->get_role()->get_number()]++;
 		}
-
 	}
 	cout << "Nurses: " << jobs[0] << endl;
 	cout << "Soldiers: " << jobs[1] << endl;
@@ -231,6 +232,38 @@ void Anthill::get_roles()
 	cout << "Collectors: " << jobs[3] << endl;
 	cout << "Builders: " << jobs[4] << endl;
 	cout << "Cleaners: " << jobs[5] << endl;
+}
+
+int Anthill::get_count_role(int inf)
+{
+	int count = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (anthill[i]->get_role() != nullptr)
+		{
+			if (anthill[i]->get_role()->get_number() == inf)
+			{
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int Anthill::damage_together()
+{
+	int res = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (anthill[i]->get_role() != nullptr)
+		{
+			if (anthill[i]->get_role()->get_number() != 0)
+			{
+				res += anthill[i]->get_damage();
+			}
+		}
+	}
+	return res/2;
 }
 
 
