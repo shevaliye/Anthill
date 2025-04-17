@@ -123,6 +123,12 @@ void Anthill::workers(int work, int ind_inf)
 		}
 	}
 }
+Ant* Anthill::get_ant(int index) {
+	if (index >= 0 && index < anthill.size()) {
+		return anthill[index];
+	}
+	return nullptr;
+}
 void Anthill::now_stay_active()
 {
 	for (int i = 0; i < size; i++)

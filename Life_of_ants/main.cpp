@@ -4,14 +4,22 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include "visual.h"
 
 int main() {
+
+
     std::srand(std::time(0));
     auto start = std::chrono::steady_clock::now();
     Anthill anthill;
     Enemy* enemy = nullptr;
     int heavy_branch = 0;
     int heavy_berry = 0;
+
+    // Запуск визуализации в отдельном потоке
+    thread visualThread([&]() {
+        Visualizer::visualize(anthill);
+        });
     while (anthill.get_size()!=0) {
         auto now = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start).count();
@@ -30,7 +38,7 @@ int main() {
                 {
                     if (anthill.get_count_informers(4))
                     {
-                        std::cout << "heavy branch" << std::endl;
+                        //std::cout << "heavy branch" << std::endl;
                         heavy_branch = 20;
                         anthill.notify(4);
                     }
@@ -46,7 +54,7 @@ int main() {
             {
                 if (anthill.get_count_informers(4))
                 {
-                    std::cout << "heavy berry" << std::endl;
+                    //std::cout << "heavy berry" << std::endl;
                     heavy_berry = 150;
                     anthill.notify(3);
                 }
@@ -70,10 +78,10 @@ int main() {
                 }
                 
             }
-            std::cout << anthill.get_max_count() << std::endl;
-            std::cout << anthill.get_size() << std::endl;
-            std::cout << anthill.get_food_count() << std::endl;
-            anthill.get_roles();
+            //std::cout << anthill.get_max_count() << std::endl;
+            //std::cout << anthill.get_size() << std::endl;
+            //std::cout << anthill.get_food_count() << std::endl;
+            //anthill.get_roles();
 
 
             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -87,7 +95,7 @@ int main() {
                 if (enemy->get_health() <= 0)
                 {
                     enemy = nullptr;
-                    std::cout << "enemy died" << std::endl;
+                    //std::cout << "enemy died" << std::endl;
                 }
 
             }
@@ -113,10 +121,12 @@ int main() {
                 if (choice && enemy == nullptr)
                 {
                     enemy = new Enemy;
-                    std::cout << "enemy appeared" << std::endl;
+                    //std::cout << "enemy appeared" << std::endl;
                 }
             }
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
+    visualThread.join();
+    return 0;
 }

@@ -35,6 +35,7 @@ public:
 	int get_food_count() { return food_count; };
 	int get_food() { return food; };
 	int get_branches() { return branches; };
+	Ant* get_ant(int index);
 private:
 	vector<Ant*> anthill;
 	vector<Informer> informers;

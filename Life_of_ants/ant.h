@@ -22,7 +22,7 @@ public:
 	int get_ages() { return ages; };
 	int health_decrease(int damage);
 	void set_status(bool stat);
-	bool get_status() {return status;};
+	bool get_status() const { return status; };
 	int get_damage() { return damage; };
 	chetirka* role_update();
 	Role* get_role() { return role; };
