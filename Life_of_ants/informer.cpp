@@ -19,15 +19,12 @@ void Informer::unsubscribe(int index)
 
 void Informer::death_ant(int index)
 {
+	unsubscribe(index);
 	for (int i = 0; i < subscribers.size(); i++)
 	{
 		if (subscribers[i] > index)
 		{
 			subscribers[i]--;
-		}
-		if (subscribers[i] == index)
-		{
-			unsubscribe(index);
 		}
 		///!!!!!!!!
 	}

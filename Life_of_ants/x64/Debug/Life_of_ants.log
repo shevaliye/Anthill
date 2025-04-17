@@ -1,19 +1,5 @@
-﻿  ant.cpp
-C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
-  (компиляция исходного файла "ant.cpp")
-  
-  anthill.cpp
-C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+﻿  anthill.cpp
+C:\Users\Руслан\OneDrive\Рабочий стол\AntColony\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
   (компиляция исходного файла "anthill.cpp")
   
-  informer.cpp
-C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
-  (компиляция исходного файла "informer.cpp")
-  
-  main.cpp
-C:\Users\Egor2\source\repos\Anthill\Life_of_ants\informer.h(11,42): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
-  (компиляция исходного файла "main.cpp")
-  
-C:\Users\Egor2\source\repos\Anthill\Life_of_ants\main.cpp(9,25): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Создание кода...
-  Life_of_ants.vcxproj -> C:\Users\Egor2\source\repos\Anthill\x64\Debug\Life_of_ants.exe
+  Life_of_ants.vcxproj -> C:\Users\Руслан\OneDrive\Рабочий стол\AntColony\Anthill\x64\Debug\Life_of_ants.exe

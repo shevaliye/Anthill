@@ -59,10 +59,7 @@ void Anthill::decrease()
 	max_count -= 20;
 	while (size > max_count)
 	{
-		auto iter = anthill.cbegin();
-		delete anthill[0];
-		anthill.erase(iter);
-		size--;
+		death_ant(0);
 	}
 }
 void Anthill::death_ant(int ind)
@@ -71,9 +68,9 @@ void Anthill::death_ant(int ind)
 	{
 		informers[i].death_ant(ind);
 	}
-	auto iter = anthill.cbegin();
 	delete anthill[ind];
-	anthill.erase(iter + ind);
+	auto iter = anthill.cbegin() + ind;
+	anthill.erase(iter);
 	size--;
 
 }
@@ -263,7 +260,7 @@ int Anthill::damage_together()
 			}
 		}
 	}
-	return res/2;
+	return res;
 }
 
 

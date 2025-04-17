@@ -12,7 +12,14 @@ void Enemy::attack(Anthill& anthill)
 	{
 		anthill.notify(1);
 		anthill.attacked(id, damage);
-		health -= anthill.get_count_role(1) * 30;
+		if (health - anthill.get_count_role(1) * 6 <= 0)
+		{
+			health = 0;
+		}
+		else
+		{
+			health -= anthill.get_count_role(1) * 6;
+		}
 	}
 	else
 	{
@@ -21,6 +28,14 @@ void Enemy::attack(Anthill& anthill)
 			anthill.notify(i);
 		}
 		anthill.attacked(id, damage);
+		if (health - anthill.damage_together() <= 0)
+		{
+			health = 0;
+		}
+		else
+		{
+			health -= anthill.damage_together();
+		}
 	}
 
 }

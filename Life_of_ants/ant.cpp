@@ -2,7 +2,7 @@
 Ant::Ant(int ind)
 {
     status = true;
-    damage = 15;
+    damage = 1;
     ages = 0;
     int random_choice = std::rand() % 2;
     health = (random_choice == 0) ? 50 : 100;
@@ -69,7 +69,7 @@ chetirka* Ant::role_update()
                 chetirka* func = new chetirka(role->get_number(), 1);
                 delete role;
                 role = new Soldier;
-                damage = 30;
+                damage = 6;
                 return func;
             }
         }
